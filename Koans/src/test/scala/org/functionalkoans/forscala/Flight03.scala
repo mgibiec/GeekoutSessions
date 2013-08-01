@@ -2,6 +2,7 @@ package org.functionalkoans.forscala
 import org.scalatest.matchers.ShouldMatchers
 import support.BlankValues._
 import support.KoanSuite
+import scala.math
 
 class Flight03 extends KoanSuite with ShouldMatchers {
 
@@ -22,9 +23,24 @@ class Flight03 extends KoanSuite with ShouldMatchers {
   // are far from exhaustive
 
   // class ...
+  
+  class ComplexNum(var real: Double, var imaginary: Double)
+  {
+      def this(real: Double)= this(real, 0)    
+      override def toString()= { 
+        real + (
+        (imaginary >= 0) match {
+          case true => " + "
+          case false => " - "    
+        }) +        
+        math.abs(imaginary) + "i"
+      }
+      def +(n2: ComplexNum) = {new ComplexNum(real + n2.real, imaginary + n2.imaginary)}
+      def +(n2: Double) = {new ComplexNum(real + n2, imaginary)}
+  }  
 
   // UNCOMMENT BELOW
-  /*test ("Create a new Complex number and check the values for the real/imaginary parts") {
+  test ("Create a new Complex number and check the values for the real/imaginary parts") {
     val complex = new ComplexNum(4, 2)
 
     complex.real should be (4)
@@ -68,31 +84,31 @@ class Flight03 extends KoanSuite with ShouldMatchers {
     complex.real should be (12)
     complex.imaginary should be (3.2)
   }
-  */
+  
   // Extra credit - numbers with a negative imaginary part should be output
   // as 6.0 - 5.0i instead of 6.0 + -5.0i - if you have time, write a new test
   // for this outcome, and then adapt the toString in the class to work correctly
   // Hint: scala.math.abs will give the absolute value of a double
 
   // UNCOMMENT BELOW
-  /*test ("Format for negative imaginary part should be R.R - I.Ii") {
+  test ("Format for negative imaginary part should be R.R - I.Ii") {
     val complex = new ComplexNum(5, -6)
     val complex2 = new ComplexNum(5.5, -6.6)
 
     complex.toString should be ("5.0 - 6.0i")
     complex2.toString should be ("5.5 - 6.6i")
-  }*/
+  }
 
   // Extra extra credit - adding a double to a complex works, but adding a complex
   // to a double does not. If you add an implicit conversion you can make this work
   // if you have time, write a test, and add an implicit to make it work
 
   // UNCOMMENT BELOW
-  /*test ("Add a complex to a double") {
+  /* test ("Add a complex to a double") {
     val complex = 5.6 + new ComplexNum(3.4, 4.5)
 
     complex.real should be (9)
     complex.imaginary should be (4.5)
-  }*/
+  } */
 }
 
